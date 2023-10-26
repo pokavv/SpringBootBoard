@@ -7,6 +7,7 @@ import study.board.domain.User;
 import study.board.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -26,16 +27,16 @@ public class UserService {
     }
 
     private void validationId(User user) {
-        List<User> findUsers = userRepository.findByLoginId(user.getLoginId());
-        if (!findUsers.isEmpty()) {
-            throw new IllegalStateException("이미 존재하는 아이디입니다.");
-        }
+        userRepository.findByLoginId(user.getLoginId())
+                .ifPresent(e -> {
+                    throw new IllegalStateException("이미 존재하는 아이디입니다.");
+                });
     }
 
     /**
      * 회원 조회
      */
-    public User findById(Long id) {
+    public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }
 
