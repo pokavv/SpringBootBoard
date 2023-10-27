@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import study.board.controller.SessionConst;
 import study.board.domain.User;
 import study.board.service.LoginService;
@@ -28,7 +29,8 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(@Valid @ModelAttribute("loginForm") LoginForm loginForm,
-                        BindingResult bindingResult, HttpServletRequest request) {
+                        BindingResult bindingResult, HttpServletRequest request,
+                        @RequestParam(defaultValue = "/") String redirectURL) {
         if (bindingResult.hasErrors()) {
             log.info("errors={}", bindingResult);
             return "login/loginForm";
@@ -46,7 +48,7 @@ public class LoginController {
         HttpSession session = request.getSession(); // 세션이 있으면 반환, 없으면 신규 세션 생성
         log.info("신규 세션 생성!");
         session.setAttribute(SessionConst.LOGIN_USER, loginUser); // 세션에 loginUser 정보 보관
-        return "redirect:/";
+        return "redirect:" + redirectURL;
     }
 
     @PostMapping("/logout")
