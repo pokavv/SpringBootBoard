@@ -3,6 +3,9 @@ package study.board.controller.board;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,17 +25,19 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping
-    public String postList(Model model) {
-        model.addAttribute("list", boardService.findAllPost());
+    public String postList(Model model,
+                           @PageableDefault(sort = "id", direction = Sort.Direction.DESC, size = 5)
+                           Pageable pageable) {
+        log.info("postList");
+        model.addAttribute("resultMap", boardService.findAllPost(pageable));
         return "board/postList";
     }
 
     @GetMapping("/{postId}")
     public String postView(@PathVariable Long postId, Model model) {
-        log.info("postView");
-
         Board post = boardService.findOnePost(postId).orElseThrow();
         model.addAttribute("post", post);
+        log.info("postView");
 
         return "board/post";
     }
