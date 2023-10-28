@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import study.board.domain.Board;
@@ -48,11 +47,6 @@ public class BoardService {
     /**
      * 게시글 전체 조회
      */
-    @Query(
-            value = "SELECT * FROM board ORDER BY id",
-            countQuery = "SELECT count(*) FROM board",
-            nativeQuery = true
-    )
     public HashMap<String, Object> findAllPost(Pageable page) {
         HashMap<String, Object> listMap = new HashMap<>();
         Page<Board> list = boardRepository.findAll(page);

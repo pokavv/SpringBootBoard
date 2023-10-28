@@ -11,6 +11,8 @@ java {
 	sourceCompatibility = '17'
 }
 
+//ext["hibernate.version"] = "6.1"
+
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
@@ -26,6 +28,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+//	implementation 'org.hibernate.orm:hibernate-core:6.3.0.Final'
 
 	// 뷰 템플릿 변경사항 서버 재시작 없이 즉시 반영하기
 	implementation 'org.springframework.boot:spring-boot-devtools'
@@ -33,6 +36,7 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'org.postgresql:postgresql'
+	runtimeOnly 'mysql:mysql-connector-java:8.0.33'
 
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
