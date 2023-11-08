@@ -13,7 +13,7 @@ public class FileRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "file_Id")
-    private Long Id;
+    private Long id;
 
     private Long postId; // posting number (FK)
 
@@ -24,7 +24,8 @@ public class FileRequest {
     private Long size;
 
     @Builder // 빌더 패턴 사용
-    public FileRequest(String originalName, String saveName, Long size) {
+    public FileRequest(Long id ,String originalName, String saveName, Long size) {
+        this.id = id;
         this.originalName = originalName;
         this.saveName = saveName;
         this.size = size;
